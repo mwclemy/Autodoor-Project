@@ -1,3 +1,2 @@
-# Autodoor-android-sever-side
-These are the server side scripts of the Autodoor system. 
-PHP is used as the server-side scripting language. the android app makes requests to some of php scripts to get and send data from and to the server.
+# Autodoor-Project
+The autodoor project is project intended to automize the process of getting access to institutions offices by providing an easier way to access them using a mobile application interface. it also provides a web app interface to monitor the access to the offices.
