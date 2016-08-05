@@ -1,4 +1,4 @@
-ngg<?php
+<?php
 
 function confirm_query($result_set) {
     global $connection;
@@ -145,4 +145,49 @@ function change_status($event_id,$event_status) {
     $result = mysqli_query($connection, $query);
     confirm_query($result);
     return true;
+}
+
+function log_action ($action, $message = "") {
+$logfile= SITE_ROOT.DS.'logs'.DS.'logs.txt';
+$new = file_exists($logfile) ? false : true;
+if ($handle = fopen($logfile, 'a')) { // append 
+$timestamp = strftime("%Y-%m-%d %H:%M:%S", time());
+$contents= "{$timestamp}  |  {$action}:  {$message}\n";
+fwrite($handle, $contents);
+fclose($handle);
+}
+else {
+    echo "Could not open log file for writing.";
+}
+
+}
+
+function __autoload($class_name) {
+ $path =LIB_PATH.DS.strtolower($class_name).".php";
+ if (file_exists($path)) {
+     require_once ($path);
+ } else {
+    die("The file {$class_name}.php could not be found. ");
+         
+     }
+ }
+ function include_layout_template($template="") {
+include(SITE_ROOT.DS.'public'.DS.'layouts'.DS.$template);
+}
+
+ function strip_zeros_from_date($marked_string="") {
+    // first remove the marked zeros
+    $no_zeros = str_replace('*0','',$marked_string);
+    // then remove any remaining marks
+    $cleaned_string= string_replace('*','',$no_zeros);
+    return $cleaned_string;
+}
+
+function output_message($message=""){
+if(!empty($message)){
+return "<p class=\"message\">{$message}</p>";
+}
+else {
+return "";
+}
 }
